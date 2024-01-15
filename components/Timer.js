@@ -10,9 +10,9 @@ import { IoVolumeMuteSharp } from "react-icons/io5";
 import { IoVolumeHighSharp } from "react-icons/io5";
 
 const Timer = () => {
-  const workDuration = 10; // 25 minutes converted to seconds
-  const shortBreakDuration = 5; // 5 minutes converted to seconds
-  const longBreakDuration = 5;
+  const workDuration = 25 * 60; // 25 minutes converted to seconds
+  const shortBreakDuration = 5 * 60; // 5 minutes converted to seconds
+  const longBreakDuration = 15 * 60;
   const [activeTab, setActiveTab] = useState("pomodoro");
   const [secondsLefts, setSecondsLeft] = useState(workDuration);
   const handleTabClick = (tabName) => {
@@ -87,7 +87,7 @@ const Timer = () => {
 function TimerCal({ session, secondsLeft, onSessionComplete }) {
   const [secondsLefts, setSecondsLefts] = useState(secondsLeft);
   const [isRunning, setIsRunning] = useState(false);
-  const [sessionCount, setSessionCount] = useState(1);
+  const [sessionCount, setSessionCount] = useState(0);
   const [click, setClick] = useState(null);
   const [finishSound, setFinishSound] = useState(null);
   const [breakSound, setBreakSound] = useState(null);
@@ -113,25 +113,6 @@ function TimerCal({ session, secondsLeft, onSessionComplete }) {
     }
     return () => clearInterval(interval);
   }, [isRunning, secondsLefts]);
-  useEffect(() => {
-    if (secondsLefts === 0) {
-      setIsRunning(true);
-      handleSessionTransition();
-    }
-  }, [secondsLefts, handleSessionTransition]);
-  useEffect(() => {
-    if (click && finishSound && breakSound) {
-      if (isMuted) {
-        click.volume = 0;
-        finishSound.volume = 0;
-        breakSound.volume = 0;
-      } else {
-        click.volume = 1;
-        finishSound.volume = 1;
-        breakSound.volume = 1;
-      }
-    }
-  }, [isMuted, click, finishSound, breakSound]);
   const handleSessionTransition = useCallback(() => {
     const newCount = sessionCount + 1;
     if (session === "pomodoro") {
@@ -153,7 +134,26 @@ function TimerCal({ session, secondsLeft, onSessionComplete }) {
         setSessionCount(newCount);
       }
     }
-  });
+  }, [sessionCount, session, onSessionComplete, breakSound, finishSound]);
+  useEffect(() => {
+    if (secondsLefts === 0) {
+      setIsRunning(true);
+      handleSessionTransition();
+    }
+  }, [secondsLefts, handleSessionTransition]);
+  useEffect(() => {
+    if (click && finishSound && breakSound) {
+      if (isMuted) {
+        click.volume = 0;
+        finishSound.volume = 0;
+        breakSound.volume = 0;
+      } else {
+        click.volume = 1;
+        finishSound.volume = 1;
+        breakSound.volume = 1;
+      }
+    }
+  }, [isMuted, click, finishSound, breakSound]);
   const toggleTimer = () => {
     click.play();
     if (secondsLefts === 25 * 60) {

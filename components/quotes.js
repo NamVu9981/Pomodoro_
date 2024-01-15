@@ -16,16 +16,15 @@ export default function Quotes() {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     getQuotes(); // Fetch when the component mounts
-  
+
     const intervalId = setInterval(() => {
       getQuotes(); // Fetch again every ten minutes
     }, 600000); // 600,000 milliseconds = 10 minutes
-  
+
     return () => clearInterval(intervalId); // Cleanup interval on unmount
   }, []);
-  
 
   return (
     <div className="relative w-full h-full">
@@ -36,7 +35,7 @@ export default function Quotes() {
         {quotes.map((quote, index) => (
           <div key={index}>
             <div>
-              <p>"{quote.q}"</p>
+              <p>&quot;{quote.q}&quot;</p>
             </div>
             <div>
               {" "}

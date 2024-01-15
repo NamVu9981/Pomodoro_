@@ -32,7 +32,7 @@ export default function Input() {
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-20 w-full">
       <div>
-        <p className="text-6xl">Let's change your background </p>
+        <p className="text-6xl">Let&apos;s change your background </p>
       </div>
       <div className="flex flex-col gap-16 width-full">
         <input
