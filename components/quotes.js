@@ -35,7 +35,7 @@ export default function Quotes() {
         {quotes.map((quote, index) => (
           <div key={index}>
             <div>
-              <p>&quot;{quote.q}&quot;</p>
+              <p>{'"' + quote.q + '"'}</p>
             </div>
             <div>
               {" "}
