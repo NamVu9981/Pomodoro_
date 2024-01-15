@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useState } from "react";
 import clickAudio from "../public/click-21156 (mp3cut.net).mp3";
 import finshAudio from "../public/Sherbourne St 7.mp3";
@@ -118,7 +118,7 @@ function TimerCal({ session, secondsLeft, onSessionComplete }) {
       setIsRunning(true);
       handleSessionTransition();
     }
-  }, [secondsLefts]);
+  }, [secondsLefts, handleSessionTransition]);
   useEffect(() => {
     if (click && finishSound && breakSound) {
       if (isMuted) {
@@ -132,7 +132,7 @@ function TimerCal({ session, secondsLeft, onSessionComplete }) {
       }
     }
   }, [isMuted, click, finishSound, breakSound]);
-  const handleSessionTransition = () => {
+  const handleSessionTransition = useCallback(() => {
     const newCount = sessionCount + 1;
     if (session === "pomodoro") {
       breakSound.play();
@@ -153,7 +153,7 @@ function TimerCal({ session, secondsLeft, onSessionComplete }) {
         setSessionCount(newCount);
       }
     }
-  };
+  });
   const toggleTimer = () => {
     click.play();
     if (secondsLefts === 25 * 60) {

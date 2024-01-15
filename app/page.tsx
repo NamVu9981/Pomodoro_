@@ -122,10 +122,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          {/* <div className=" absolute z-10 w-full h-full flex justify-center items-center">
-          <Input />
-        </div> */}
           <Image
             className="object-cover z-0 absolute w-full h-full"
             src={

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 
-export default function quotes() {
+export default function Quotes() {
   const [quotes, setQuotes] = useState([]);
 
   useEffect(() => {
